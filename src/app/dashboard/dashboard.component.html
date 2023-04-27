@@ -1,0 +1,31 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened class=" w-24 sm:w-64" style="background-color: white;">
+    <div class="nav-items pt-40 sm:pt-20 px-5 justify-center psm:flex sm:flex-col sm:items-start " >
+     <div class="team p-3 rounded " style="background-color: blue; color: white;"><i class="fas fa-user-friends mr-2 text-xl" ></i><span class="text-xl hidden sm:inline-block">Team Members</span></div>
+     <div class="product p-3 my-10" style="color: blue;"><i class="fas fa-box mr-2 text-xl" ></i><span class="text-xl hidden sm:inline-block">Products</span></div>
+     <div class="inbox p-3" style="color: blue;"><i class="fas fa-inbox mr-2 text-xl"></i><span class="text-xl hidden sm:inline-block">Inbox</span></div>
+     </div>
+  </mat-drawer>
+  <mat-drawer-content style="background-color: #f3f4f6;">
+
+  <div class="header flex flex-col gap-y-3 h-28 p-5 sm:flex sm:flex-row  sm:justify-between sm:items-center sm:h-16 sm:p-10" style="background-color: white;">
+
+    <div class="heading text-2xl font-medium">Team Members</div>
+    <div class="searhbox">
+      <input type="text" placeholder="Search...." class="w-full border-2 border-gray rounded p-2 sm:w-72" style="background-color: #f3f4f6;">
+    </div>
+  </div>
+
+   <div class="main-cards ">
+    <div class="cards-cont flex flex-col p-10 sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:p-20">
+        <mat-card *ngFor="let member of teamMembers" class="m-5 px-5 py-10 sm:px-16 sm:py-20 sm:m-5 text-center">
+           <mat-card-content>
+             <div class="image"></div>
+             <div class="name text-base font-medium">{{member.name}}</div>
+             <div class="role" style="color:gray">{{member.role}}</div>
+            </mat-card-content>
+    </mat-card>
+    </div>
+   </div>
+  </mat-drawer-content>
+</mat-drawer-container>

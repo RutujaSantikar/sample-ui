@@ -1,0 +1,163 @@
+<div class="drop-cont">
+
+ <div class="card-cont">
+ <mat-card class="p-5">
+
+
+  <form class=" flex flex-col sm:flex sm:flex-row sm:flex-wrap sm:justify-around sm:items-center " [formGroup]="dataForm">
+  <mat-form-field appearance="outline" class="sm:w-1/4 mr-2">
+    <mat-label>District</mat-label>
+    <mat-select formControlName="disData" (selectionChange)="onChangeDistrict()">
+      <mat-option *ngFor="let district of getDistrict" [value]="district.disId">
+        {{district.disName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline" class="sm:w-1/4 mr-2">
+    <mat-label>Division</mat-label>
+    <mat-select formControlName="divisionData" (selectionChange)="onChangeDivision()">
+      <mat-option *ngFor="let division of getDivision" [value]="division.divId">
+        {{division.divName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+
+  <mat-form-field appearance="outline" class="sm:w-1/4 mr-2">
+    <mat-label>Subdivision</mat-label>
+    <mat-select formControlName="subdivisionData">
+      <mat-option  *ngFor=" let subdivision of getSubDivision" [value]="subdivision.sudId">
+    {{subdivision.sudName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="outline" class="sm:w-1/4 mr-2">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fromDate">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="sm:w-1/4 mr-2">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker1" formControlName="toDate">
+    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+
+
+</form>
+
+
+ <div class="flex justify-center " >
+    <button class="search-btn rounded py-3 px-5 w-full sm:w-36 text-lg"
+    style="background-color: rgb(205, 153, 253);" (click)="onSearch()" >
+      Search
+    </button>
+ </div>
+
+
+  <div class="excl-icon mt-10" *ngIf="showExcel">
+    <button mat-icon-button (click)="exportAsExcel()">
+      <mat-icon><img src="/assets/sheets.png"></mat-icon>
+    </button>
+  </div>
+
+  <div class="fiter-area mt-10" *ngIf="showFilter">
+    <mat-form-field class="w-full">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+  </div>
+
+
+
+
+ <div class="mat-elevation-z8 mt-10">
+  <table mat-table [dataSource]="dataSource" *ngIf="showTable">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="srNo">
+      <th mat-header-cell *matHeaderCellDef> Sr No. </th>
+      <td mat-cell *matCellDef="let element; let i= index"> {{i+1}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="district">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.potDistrict}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="division">
+      <th mat-header-cell *matHeaderCellDef> Division </th>
+      <td mat-cell *matCellDef="let element"> {{element.potDivision}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="subdivision">
+      <th mat-header-cell *matHeaderCellDef> SubDivision </th>
+      <td mat-cell *matCellDef="let element"> {{element.potSubDivision}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total Count </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalCount}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="assign">
+      <th mat-header-cell *matHeaderCellDef> Assigned Count </th>
+      <td mat-cell *matCellDef="let element"> {{element.assignCount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="closed">
+      <th mat-header-cell *matHeaderCellDef>Closed Count </th>
+      <td mat-cell *matCellDef="let element"> {{element.completedCount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pending">
+      <th mat-header-cell *matHeaderCellDef> Pending Count </th>
+      <td mat-cell *matCellDef="let element"> {{element.pendingCount}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10,20,50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
+ </mat-card>
+
+
+
+ </div>
+
+</div>
+
+
+
+
+
+
+<!-- data: [,…]
+0: {potDistrict: "Nashik", potDivision: "PW Division Malegaon",
+ potSubDivision: "PW Subdivision Malegaon",…}
+assignCount: 8
+completedCount: 0
+pendingCount: 8
+potDistrict: "Nashik"
+potDivision: "PW Division Malegaon"
+potSubDivision: "PW Subdivision Malegaon"
+totalCount: 8
+status: "Success" -->
